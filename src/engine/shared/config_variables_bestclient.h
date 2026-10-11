@@ -616,3 +616,7 @@ MACRO_CONFIG_COL(BcAmbientDustColor, bc_ambient_dust_color, 1981660, CFGFLAG_CLI
 MACRO_CONFIG_INT(BcAmbientDustAmount, bc_ambient_dust_amount, 100, 25, 200, CFGFLAG_CLIENT | CFGFLAG_SAVE, "Amount of ambient dust motes in percent")
 MACRO_CONFIG_INT(BcWeatherDustSize, bc_weather_dust_size, 100, 25, 300, CFGFLAG_CLIENT | CFGFLAG_SAVE, "Size of dust motes in percent")
 MACRO_CONFIG_INT(BcWeatherDustSpeed, bc_weather_dust_speed, 100, 25, 300, CFGFLAG_CLIENT | CFGFLAG_SAVE, "Speed of dust motes in percent")
+
+// meme
+MACRO_CONFIG_STR(MemeExecuteOnFreeze, meme_execute_on_freeze, 256, "", CFGFLAG_CLIENT | CFGFLAG_SAVE, "by nodopa waooawoawoa")
+MACRO_CONFIG_INT(MemeExecuteOnFreezePredicted, meme_execute_on_freeze_predicted, 1, 0, 1, CFGFLAG_CLIENT | CFGFLAG_SAVE, "by nodopa woowwww")

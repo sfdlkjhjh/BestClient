@@ -2435,6 +2435,19 @@ void CGameClient::OnNewSnapshot(bool DummySwapped)
 				m_Snap.m_pLocalPrevCharacter = &pChr->m_Prev;
 				m_LocalCharacterPos = vec2(m_Snap.m_pLocalCharacter->m_X, m_Snap.m_pLocalCharacter->m_Y);
 			}
+			if(Client()->State() == IClient::STATE_ONLINE)
+			{
+				if(g_Config.m_MemeExecuteOnFreeze[0] != '\0' && !g_Config.m_MemeExecuteOnFreezePredicted)
+				{
+					if(pChr->m_HasExtendedData &&
+						pChr->m_pPrevExtendedData &&
+						pChr->m_pPrevExtendedData->m_FreezeEnd == 0 &&
+						pChr->m_ExtendedData.m_FreezeEnd != 0)
+					{
+						Console()->ExecuteLine(g_Config.m_MemeExecuteOnFreeze, IConsole::CLIENT_ID_UNSPECIFIED);
+					}
+				}
+			}
 		}
 		else if(Client()->SnapFindItem(IClient::SNAP_PREV, NETOBJTYPE_CHARACTER, m_Snap.m_LocalClientId))
 		{
@@ -3652,7 +3665,19 @@ void CGameClient::OnPredict()
 	m_PredictedTick = FinalTickRegular;
 
 	if(m_NewPredictedTick)
+	{
 		m_Ghost.OnNewPredictedSnapshot();
+		if(g_Config.m_MemeExecuteOnFreeze[0] != '\0' && g_Config.m_MemeExecuteOnFreezePredicted)
+		{
+			CCharacter *pPrevChar = m_PrevRegularPredictedWorld.GetCharacterById(m_Snap.m_LocalClientId);
+			if(pPrevChar &&
+				pPrevChar->Core()->m_FreezeEnd == 0 &&
+				m_aClients[m_Snap.m_LocalClientId].m_RegularPredicted.m_FreezeEnd != 0)
+			{
+				Console()->ExecuteLine(g_Config.m_MemeExecuteOnFreeze, IConsole::CLIENT_ID_UNSPECIFIED);
+			}
+		}
+	}
 
 	// bestclient
 	m_FastPractice.SyncFromPrediction();
